@@ -30,7 +30,8 @@ var questions = {
 				"Family Matters",
 				"Full House",
 				"Home Improvement"],
-		audio: "audio/music.mp3"
+		audio: "audio/music.mp3",
+		tag: "growingPains"
 	},
 }
 
@@ -52,15 +53,17 @@ startButton.on("click", function() {
 //Set the current question. Start the music and display the options
 function newQuestion () {
 	currQuestion = questions.q1;
-	// var music = $("audio");  consider creating a music div with autoplay on the fly using the audio obj attr
-
+	console.log("Solution: " + currQuestion.solution);
+	//create a new audio element with a source passed from the new question
+	var music = $("<audio>").attr("src", currQuestion.audio).attr("id", currQuestion.tag);
+	$("#title").append(music);
+	//start playing the music
+	document.getElementById(currQuestion.tag).play();
 	//make a button for each option
 	for (var i = 0; i < 4; i++) {
 		var opt = currQuestion.options[i];
-		console.log(opt);
 		var choice = $("button.choice").eq(i);
 		choice.attr("data-text", opt);
-		console.log($(".choice").eq(i));
 		choice.text(opt);
 		
 		
@@ -73,5 +76,14 @@ $(".choice").on("click", function() {
 	
 	var picked = $(this).attr("data-text");
 	console.log(picked);
+	if (picked === currQuestion.solution) {
+		alert("correct!");
+	}
+	else if (picked !== currQuestion.solution) {
+		alert("incorrect");
+	}
+	else {
+		alert("ERROR");
+	}
 
 })
