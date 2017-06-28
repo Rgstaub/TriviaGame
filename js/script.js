@@ -18,25 +18,60 @@ each question is an object, consisting of
 
 */
 
+//global game-state variables
 var gameOver = true;
+var gameOn = false;
+var currQuestion = {};
 
 var questions = {
-	"1": {
+	"q1": {
 		solution: "Family Matters",
-		option1: "Growing Pains",
-		option2: "Family Matters",
-		option3: "Full House",
-		option4: "Home Improvement"
+		options: ["Growing Pains",
+				"Family Matters",
+				"Full House",
+				"Home Improvement"],
+		audio: "audio/music.mp3"
 	},
 }
 
-var startButton = $("<button/>").attr("id", "startButton").addClass("btn btn-lg");
+//make the start button
+var startButton = $("<button/>").attr("id", "startButton").addClass("uiButton");
 startButton.text("START");
 $("#interface").append(startButton);
 
+//begin the game if the game is over
 startButton.on("click", function() {
 	if (gameOver === true) {
 		console.log("started new game");
 		gameOver = false;
+		gameOn = true;
+		newQuestion();
 	}
+})
+
+//Set the current question. Start the music and display the options
+function newQuestion () {
+	currQuestion = questions.q1;
+	// var music = $("audio");  consider creating a music div with autoplay on the fly using the audio obj attr
+
+	//make a button for each option
+	for (var i = 0; i < 4; i++) {
+		var opt = currQuestion.options[i];
+		console.log(opt);
+		var choice = $("button.choice").eq(i);
+		choice.attr("data-text", opt);
+		console.log($(".choice").eq(i));
+		choice.text(opt);
+		
+		
+		
+		
+	}
+}
+
+$(".choice").on("click", function() {
+	
+	var picked = $(this).attr("data-text");
+	console.log(picked);
+
 })
