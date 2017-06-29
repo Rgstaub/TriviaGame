@@ -18,12 +18,19 @@ each question is an object, consisting of
 
 */
 
+
+
 //global game-state variables
 var gameOver = true;
 var gameOn = false;
+var correct = 0;
+var incorrect = 0;
+var gameTimer;
+var solutionTimer;
+var time = 30;
 
 var currQuestion = {};
-var questionList = ["q1", "q2", "q3", "q4"];
+var questionList = ["q0", "q1", "q2", "q3"];
 var questions = {
 	"q0": {
 		solution: "Full House",
@@ -53,9 +60,9 @@ var questions = {
 		tag: "growingPains"
 	},
 	"q3": {
-		solution: "homeImprovement",
+		solution: "Home Improvement",
 		options: ["Growing Pains",
-				"homeImprovement",
+				"Family Matters",
 				"Full House",
 				"Home Improvement"],
 		audio: "audio/homeImprovement.mp3",
@@ -69,29 +76,69 @@ var startButton = $("<button/>").attr("id", "startButton").addClass("uiButton");
 startButton.text("START");
 $("#interface").append(startButton);
 
+
+function countDown() {
+	$("#timer").text(time);
+	time--;
+	if (time === 0) {
+		$("#messageBoard").text("Time Expired. The correct answer was " + currQuestion.solution)
+		clearInterval(gameTimer);
+		solutionTimer = setInterval(function() {clearAnswer()}, 4000);
+		incorrect++;
+		var song = document.getElementById(currQuestion.tag);
+		song.pause();
+		song.currentTime = 0;
+
+	}
+}
+
+function clearAnswer() {
+	$("#messageBoard").text("");
+	clearInterval(solutionTimer);
+	newQuestion();
+}
+
+
+//display results and reset game variables
+function endGame() {
+	alert("Game Over\nCorrect: " + correct + "\nIncorrect: " + incorrect);
+	startButton.css("display", "inline-block");
+	gameOver = true;
+	gameOn = false;
+	correct = 0;
+	incorrect = 0;
+	questionList = ["q0", "q1", "q2", "q3"];
+	$(".choice").each(function() {
+		$(this).text("");
+		$(this).css("display", "none");
+	})
+	$("#timer").text("");
+}	
+
 //Set the current question. Start the music and display the options
-function newQuestion () {
-	var random = Math.floor(Math.random() * questionList.length);
-	console.log(random);
-	currQuestion = questions["q" + random];
-	console.log(currQuestion);;
-	console.log("Solution: " + currQuestion.solution);
-	//create a new audio element with a source passed from the new question
-		// var music = $("<audio>").attr("src", currQuestion.audio).attr("id", currQuestion.tag);
-		// $("#title").append(music);
-	//start playing the music
-	document.getElementById(currQuestion.tag).play();
-	//make a button for each option
-	for (var i = 0; i < 4; i++) {
-		var opt = currQuestion.options[i];
-		var choice = $("button.choice").eq(i);
-		choice.attr("data-text", opt);
-		choice.text(opt);
+function newQuestion() {
+	if (questionList.length < 1) {
+		endGame();
+	}
+	else {
+		//randomly select a question and remove that question from the pool of possible questions
+		time = 30;
+		var random = Math.floor(Math.random() * questionList.length);
+		currQuestion = questions[questionList[random]]; 
+		//start playing the music
+		document.getElementById(currQuestion.tag).play();
+		//make a button for each option
+		for (var i = 0; i < 4; i++) {
+			var opt = currQuestion.options[i];
+			var choice = $("button.choice").eq(i);
+			choice.attr("data-text", opt);
+			choice.text(opt);
+			choice.css("display", "inline-block");
+		}
+		questionList.splice(random, 1);
+		gameTimer = setInterval(function() {countDown()}, 1000);
 	}
 }		
-		
-	
-
 
 //begin the game if the game is over
 startButton.on("click", function() {
@@ -113,10 +160,25 @@ $(".choice").on("click", function() {
 	var picked = $(this).attr("data-text");
 	console.log(picked);
 	if (picked === currQuestion.solution) {
-		alert("correct!");
+		//stop and reset the current audio
+		correct++;
+		clearInterval(gameTimer);
+		console.log("score: " + correct)
+		var song = document.getElementById(currQuestion.tag);
+		song.pause();
+		song.currentTime = 0;
+		$("#messageBoard").text("Correct!");
+		solutionTimer = setInterval(function() {clearAnswer()}, 4000);
 	}
 	else if (picked !== currQuestion.solution) {
-		alert("incorrect");
+		incorrect++;
+		clearInterval(gameTimer);
+		console.log("incorrect: " + incorrect)
+		var song = document.getElementById(currQuestion.tag);
+		song.pause();
+		song.currentTime = 0;
+		$("#messageBoard").html("Incorrect\nThe correct answer was " + currQuestion.solution);
+		solutionTimer = setInterval(function() {clearAnswer()}, 4000);
 	}
 	else {
 		alert("ERROR");
