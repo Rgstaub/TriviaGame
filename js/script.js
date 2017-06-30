@@ -71,6 +71,8 @@ var questions = {
 
 }
 
+$(document).ready(function() {
+
 //make the start button
 var startButton = $("<button/>").attr("id", "startButton").addClass("uiButton");
 startButton.text("START");
@@ -183,5 +185,7 @@ $(".choice").on("click", function() {
 	else {
 		alert("ERROR");
 	}
+
+})
 
 })
