@@ -9,15 +9,7 @@ check clicks on button to see if the answer is correct
 display result to player. must show correct answer.
 start a new game. Increment score if correct.
 
-each question is an object, consisting of
-	song url
-	answer 1-x {
-		text: ""
-		correct: false
-	}
-
 */
-
 
 
 //global game-state variables
@@ -30,306 +22,312 @@ var solutionTimer;
 var time = 30;
 
 var currQuestion = {};
-var questionList = ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"];
+var questionList = ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", 
+					"q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19"];
 var questions = {
 	"q0": {
 		solution: "Full House",
-		options: ["Growing Pains",
+		options: ["7th Heaven",
 				"Family Matters",
 				"Full House",
-				"Home Improvement"],
+				"Step By Step"],
 		audio: "audio/fullHouse.mp3",
 		tag: "fullHouse"
 	},
 	"q1": {
 		solution: "Family Matters",
-		options: ["Growing Pains",
+		options: ["Full House",
 				"Family Matters",
-				"Full House",
-				"Home Improvement"],
+				"The King of Queens",
+				"the Nanny"],
 		audio: "audio/familyMatters.mp3",
 		tag: "familyMatters"
 	},
 	"q2": {
 		solution: "Growing Pains",
-		options: ["Family Matters",
+		options: ["Daria",
 				"Growing Pains",
-				"Full House",
-				"Home Improvement"],
+				"That 70's Show",
+				"Doogie Howsey"],
 		audio: "audio/growingPains.mp3",
 		tag: "growingPains"
 	},
 	"q3": {
 		solution: "Home Improvement",
-		options: ["Growing Pains",
-				"Family Matters",
-				"Full House",
+		options: ["Seinfeld",
+				"Sabrina",
+				"Spin City",
 				"Home Improvement"],
 		audio: "audio/homeImprovement.mp3",
 		tag: "homeImprovement"
 	},
 	"q4": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Blossom",
+		options: ["Daria",
+				"The Cosby Show",
+				"The Drew Carey Show",
+				"Blossom"],
+		audio: "audio/blossom.mp3",
+		tag: "blossom"
 	},
 	"q5": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Boy Meets World",
+		options: ["Boy Meets World",
+				"Freaks and Geeks",
+				"Sabrina",
+				"Becker"],
+		audio: "audio/boyMeetsWorld.mp3",
+		tag: "boyMeetsWorld"
 	},
 	"q6": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Coach",
+		options: ["the West Wing",
+				"Wings",
+				"Coach",
+				"Salute your Shorts"],
+		audio: "audio/coach.mp3",
+		tag: "coach"
 	},
 	"q7": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Everybody Loves Raymond",
+		options: ["The Golden Girls",
+				"Daria",
+				"The King of Queens",
+				"Everybody Loves Raymond"],
+		audio: "audio/everybodyLovesRaymond.mp3",
+		tag: "everybodyLovesRaymond"
 	},
 	"q8": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Frasier",
+		options: ["Frasier",
+				"The Drew Carey Show",
+				"The Nanny",
+				"The King of Queens"],
+		audio: "audio/frasier.mp3",
+		tag: "frasier"
 	},
 	"q9": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Friends",
+		options: ["Will and Grace",
+				"Friends",
+				"Becker",
+				"My So Called Life"],
+		audio: "audio/friends.mp3",
+		tag: "friends"
 	},
 	"q10": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Mad About You",
+		options: ["Sex and the City",
+				"Mad About You",
+				"Dharma and Greg",
+				"Grace Under Fire"],
+		audio: "audio/madAboutYou.mp3",
+		tag: "madAboutYou"
 	},
 	"q11": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Married With Children",
+		options: ["Everybody Loves Raymond",
+				"Will and Grace",
+				"7th Heaven",
+				"Married With Children"],
+		audio: "audio/marriedWithChildren.mp3",
+		tag: "marriedWithChildren"
 	},
 	"q12": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Northern Exposure",
+		options: ["Northern Exposure",
+				"Beverly Hills 90210",
+				"Ellen",
+				"Parker Lewis Can't Lose"],
+		audio: "audio/northernExposure.mp3",
+		tag: "northernExposure"
 	},
 	"q13": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Roseanne",
+		options: ["Ellen",
+				"My So Called Life",
+				"7th Heaven",
+				"Roseanne"],
+		audio: "audio/roseanne.mp3",
+		tag: "roseanne"
 	},
 	"q14": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Seinfeld",
+		options: ["Curb Your Enthusiasm",
+				"Seinfeld",
+				"Ally McBeal",
+				"Dinosaurs"],
+		audio: "audio/seinfeld.mp3",
+		tag: "seinfeld"
 	},
 	"q15": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Spin City",
+		options: ["Dharma and Greg",
+				"Just Shoot Me",
+				"Suddenly Susan",
+				"Spin City"],
+		audio: "audio/spinCity.mp3",
+		tag: "spinCity"
 	},
 	"q16": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "The Cosby Show",
+		options: ["Everybody Loves Raymond",
+				"Frasier",
+				"The Cosby Show",
+				"Ally McBeal"],
+		audio: "audio/theCosbyShow.mp3",
+		tag: "theCosbyShow"
 	},
 	"q17": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "The Wonder Years",
+		options: ["The Wonder Years",
+				"That 70's Show",
+				"Buffy the Vampire Slayer",
+				"The Fresh Prince of Bel-Air"],
+		audio: "audio/theWonderYears.mp3",
+		tag: "theWonderYears"
 	},
 	"q18": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "Third Rock From the Sun",
+		options: ["That 70's Show",
+				"Futurama",
+				"Ren and Stimpy",
+				"Third Rock From the Sun"],
+		audio: "audio/thirdRockFromTheSun.mp3",
+		tag: "thirdRockFromTheSun"
 	},
 	"q19": {
-		solution: "solu",
-		options: ["",
-				"",
-				"",
-				""],
-		audio: "audio/ta.mp3",
-		tag: "ta"
+		solution: "News Radio",
+		options: ["King of the Hill",
+				"News Radio",
+				"Dharma and Greg",
+				"Ellen"],
+		audio: "audio/newsRadio.mp3",
+		tag: "newsRadio"
 	},
 
 }
+
+//create an audio HTML element for each song to be used
+for (var i = 0; i < questionList.length; i++) {
+	var song = $("<audio/>");
+	song.attr("id", questions["q"+i].tag).attr("src", "audio/" + questions["q"+i].tag + ".mp3")
+		.attr("type", "audio/mpeg");
+	$('body').append(song);
+}
+
 
 $(document).ready(function() {
 
-//make the start button
-var startButton = $("<button/>").attr("id", "startButton").addClass("uiButton");
-startButton.text("START");
-$("#interface").append(startButton);
+	//make the start button
+	var startButton = $("<button/>").attr("id", "startButton").addClass("uiButton");
+	startButton.text("START");
+	$("#interface").append(startButton);
 
-
-function countDown() {
-	$("#timer").text(time);
-	time--;
-	if (time === 0) {
-		$("#messageBoard").text("Time Expired. The correct answer was " + currQuestion.solution)
-		clearInterval(gameTimer);
-		solutionTimer = setInterval(function() {clearAnswer()}, 4000);
-		incorrect++;
-		var song = document.getElementById(currQuestion.tag);
-		song.pause();
-		song.currentTime = 0;
-
-	}
-}
-
-function clearAnswer() {
-	$("#messageBoard").text("");
-	clearInterval(solutionTimer);
-	newQuestion();
-}
-
-
-//display results and reset game variables
-function endGame() {
-	alert("Game Over\nCorrect: " + correct + "\nIncorrect: " + incorrect);
-	startButton.css("display", "inline-block");
-	gameOver = true;
-	gameOn = false;
-	correct = 0;
-	incorrect = 0;
-	questionList = ["q0", "q1", "q2", "q3"];
-	$(".choice").each(function() {
-		$(this).text("");
-		$(this).css("display", "none");
-	})
-	$("#timer").text("");
-}	
-
-//Set the current question. Start the music and display the options
-function newQuestion() {
-	if (questionList.length < 1) {
-		endGame();
-	}
-	else {
-		//randomly select a question and remove that question from the pool of possible questions
-		time = 30;
-		var random = Math.floor(Math.random() * questionList.length);
-		currQuestion = questions[questionList[random]]; 
-		//start playing the music
-		document.getElementById(currQuestion.tag).play();
-		//make a button for each option
-		for (var i = 0; i < 4; i++) {
-			var opt = currQuestion.options[i];
-			var choice = $("button.choice").eq(i);
-			choice.attr("data-text", opt);
-			choice.text(opt);
-			choice.css("display", "inline-block");
+	// increment the time down while the game is in progress. check each time if the timer has reached
+	// zero and process as an incorrect anser if so
+	function countDown() {
+		$("#timer").text(time);
+		time--;
+		if (time === 0) {
+			$("#messageBoard").text("Time Expired. The correct answer was " + currQuestion.solution)
+			clearInterval(gameTimer);
+			solutionTimer = setInterval(function() {clearAnswer()}, 4000);
+			incorrect++;
+			var song = document.getElementById(currQuestion.tag);
+			song.pause();
+			song.currentTime = 0;
 		}
-		questionList.splice(random, 1);
-		gameTimer = setInterval(function() {countDown()}, 1000);
 	}
-}		
 
-//begin the game if the game is over
-startButton.on("click", function() {
-	if (gameOver === true) {
-		console.log("started new game");
-		gameOver = false;
-		gameOn = true;
-		startButton.css("display", "none");
+	function clearAnswer() {
+		$("#messageBoard").text("");
+		clearInterval(solutionTimer);
 		newQuestion();
 	}
-})
 
-	
+	//display results and reset game variables
+	function endGame() {
+		alert("Game Over\nCorrect: " + correct + "\nIncorrect: " + incorrect);
+		startButton.css("display", "inline-block");
+		gameOver = true;
+		gameOn = false;
+		correct = 0;
+		incorrect = 0;
+		questionList = ["q0", "q1", "q2", "q3"];
+		$(".choice").each(function() {
+			$(this).text("");
+			$(this).css("display", "none");
+		})
+		$("#timer").text("");
+	}	
+
+	//Set the current question. Start the music and display the options
+	function newQuestion() {
+		if (questionList.length < 1) {
+			endGame();
+		}
+		else {
+			//randomly select a question and remove that question from the pool of possible questions
+			time = 30;
+			var random = Math.floor(Math.random() * questionList.length);
+			currQuestion = questions[questionList[random]]; 
+			//start playing the music
+			document.getElementById(currQuestion.tag).play();
+			//make a button for each option
+			for (var i = 0; i < 4; i++) {
+				var opt = currQuestion.options[i];
+				var choice = $("button.choice").eq(i);
+				choice.attr("data-text", opt);
+				choice.text(opt);
+				choice.css("display", "inline-block");
+			}
+			questionList.splice(random, 1);
+			gameTimer = setInterval(function() {countDown()}, 1000);
+		}
+	}		
+
+	//begin the game if the game is over
+	startButton.on("click", function() {
+		if (gameOver === true) {
+			console.log("started new game");
+			gameOver = false;
+			gameOn = true;
+			startButton.css("display", "none");
+			newQuestion();
+		}
+	})
+
+	//
+	$(".choice").on("click", function() {
 		
+		var picked = $(this).attr("data-text");
+		console.log(picked);
+		if (picked === currQuestion.solution) {
+			//stop and reset the current audio
+			correct++;
+			clearInterval(gameTimer);
+			console.log("score: " + correct)
+			var song = document.getElementById(currQuestion.tag);
+			song.pause();
+			song.currentTime = 0;
+			$("#messageBoard").text("Correct!");
+			solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+		}
+		else if (picked !== currQuestion.solution) {
+			incorrect++;
+			clearInterval(gameTimer);
+			console.log("incorrect: " + incorrect)
+			var song = document.getElementById(currQuestion.tag);
+			song.pause();
+			song.currentTime = 0;
+			$("#messageBoard").html("Incorrect\nThe correct answer was " + currQuestion.solution);
+			solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+		}
+		else {
+			alert("ERROR");
+		}
 
-
-$(".choice").on("click", function() {
-	
-	var picked = $(this).attr("data-text");
-	console.log(picked);
-	if (picked === currQuestion.solution) {
-		//stop and reset the current audio
-		correct++;
-		clearInterval(gameTimer);
-		console.log("score: " + correct)
-		var song = document.getElementById(currQuestion.tag);
-		song.pause();
-		song.currentTime = 0;
-		$("#messageBoard").text("Correct!");
-		solutionTimer = setInterval(function() {clearAnswer()}, 4000);
-	}
-	else if (picked !== currQuestion.solution) {
-		incorrect++;
-		clearInterval(gameTimer);
-		console.log("incorrect: " + incorrect)
-		var song = document.getElementById(currQuestion.tag);
-		song.pause();
-		song.currentTime = 0;
-		$("#messageBoard").html("Incorrect\nThe correct answer was " + currQuestion.solution);
-		solutionTimer = setInterval(function() {clearAnswer()}, 4000);
-	}
-	else {
-		alert("ERROR");
-	}
-
-})
+	})
 
 })
