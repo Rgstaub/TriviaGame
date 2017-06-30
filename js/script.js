@@ -48,7 +48,7 @@ var questions = {
 		options: ["Daria",
 				"Growing Pains",
 				"That 70's Show",
-				"Doogie Howsey"],
+				"Doogie Howser"],
 		audio: "audio/growingPains.mp3",
 		tag: "growingPains"
 	},
@@ -241,6 +241,7 @@ $(document).ready(function() {
 	}
 
 	function clearAnswer() {
+		gameOn = false;
 		$("#messageBoard").text("");
 		clearInterval(solutionTimer);
 		newQuestion();
@@ -264,6 +265,7 @@ $(document).ready(function() {
 
 	//Set the current question. Start the music and display the options
 	function newQuestion() {
+		gameOn = true;
 		if (questionList.length < 1) {
 			endGame();
 		}
@@ -280,7 +282,7 @@ $(document).ready(function() {
 				var choice = $("button.choice").eq(i);
 				choice.attr("data-text", opt);
 				choice.text(opt);
-				choice.css("display", "inline-block");
+				choice.css("display", "block");
 			}
 			questionList.splice(random, 1);
 			gameTimer = setInterval(function() {countDown()}, 1000);
@@ -298,36 +300,41 @@ $(document).ready(function() {
 		}
 	})
 
-	//
+	// When one of the solution choices is clicked..
 	$(".choice").on("click", function() {
-		
 		var picked = $(this).attr("data-text");
 		console.log(picked);
-		if (picked === currQuestion.solution) {
-			//stop and reset the current audio
-			correct++;
-			clearInterval(gameTimer);
-			console.log("score: " + correct)
-			var song = document.getElementById(currQuestion.tag);
-			song.pause();
-			song.currentTime = 0;
-			$("#messageBoard").text("Correct!");
-			solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+		if (gameOn === true) {
+			if (picked === currQuestion.solution) {
+				gameOn = false;
+				correct++;
+				clearInterval(gameTimer);
+				console.log("score: " + correct)
+				//stop and reset the current audio
+				var song = document.getElementById(currQuestion.tag);
+				song.pause();
+				song.currentTime = 0;
+				//Display massage and begin the display interval timer
+				$("#messageBoard").text("Correct!");
+				solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+			}
+			else if (picked !== currQuestion.solution) {
+				gameOn = false;
+				incorrect++;
+				clearInterval(gameTimer);
+				console.log("incorrect: " + incorrect)
+				//stop and reset the current audio
+				var song = document.getElementById(currQuestion.tag);
+				song.pause();
+				song.currentTime = 0;
+				//Display massage and begin the display interval timer
+				$("#messageBoard").html("Incorrect\nThe correct answer was " + currQuestion.solution);
+				solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+			}
+			else {
+				alert("ERROR");
+			}
 		}
-		else if (picked !== currQuestion.solution) {
-			incorrect++;
-			clearInterval(gameTimer);
-			console.log("incorrect: " + incorrect)
-			var song = document.getElementById(currQuestion.tag);
-			song.pause();
-			song.currentTime = 0;
-			$("#messageBoard").html("Incorrect\nThe correct answer was " + currQuestion.solution);
-			solutionTimer = setInterval(function() {clearAnswer()}, 2000);
-		}
-		else {
-			alert("ERROR");
-		}
-
 	})
 
 })
