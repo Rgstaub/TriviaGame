@@ -30,7 +30,7 @@ var solutionTimer;
 var time = 30;
 
 var currQuestion = {};
-var questionList = ["q0", "q1", "q2", "q3"];
+var questionList = ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"];
 var questions = {
 	"q0": {
 		solution: "Full House",
@@ -67,6 +67,150 @@ var questions = {
 				"Home Improvement"],
 		audio: "audio/homeImprovement.mp3",
 		tag: "homeImprovement"
+	},
+	"q4": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q5": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q6": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q7": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q8": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q9": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q10": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q11": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q12": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q13": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q14": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q15": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q16": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q17": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q18": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
+	},
+	"q19": {
+		solution: "solu",
+		options: ["",
+				"",
+				"",
+				""],
+		audio: "audio/ta.mp3",
+		tag: "ta"
 	},
 
 }
