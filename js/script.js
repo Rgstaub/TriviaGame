@@ -227,8 +227,9 @@ $(document).ready(function() {
 	// increment the time down while the game is in progress. check each time if the timer has reached
 	// zero and process as an incorrect anser if so
 	function countDown() {
-		$("#timer").text(time);
+		
 		time--;
+		$("#timer").text(time);
 		if (time === 0) {
 			$("#messageBoard").text("Time Expired. The correct answer was " + currQuestion.solution)
 			clearInterval(gameTimer);
@@ -237,11 +238,21 @@ $(document).ready(function() {
 			var song = document.getElementById(currQuestion.tag);
 			song.pause();
 			song.currentTime = 0;
+			document.getElementById("buzzer").play();
+			document.getElementById("aww").play();
 		}
+		else if (time < 11) {
+			$("#timer").addClass("lowTime");
+			if (time < 6) {
+				document.getElementById("tick").play();
+			}
+		}
+
 	}
 
 	function clearAnswer() {
 		gameOn = false;
+		$("#timer").text("30")
 		$("#messageBoard").text("");
 		clearInterval(solutionTimer);
 		newQuestion();
@@ -250,7 +261,7 @@ $(document).ready(function() {
 	//display results and reset game variables
 	function endGame() {
 		alert("Game Over\nCorrect: " + correct + "\nIncorrect: " + incorrect);
-		startButton.css("display", "inline-block");
+		startButton.css("display", "block");
 		gameOver = true;
 		gameOn = false;
 		correct = 0;
@@ -265,12 +276,14 @@ $(document).ready(function() {
 
 	//Set the current question. Start the music and display the options
 	function newQuestion() {
+		console.log(questionList.length);
 		gameOn = true;
 		if (questionList.length < 1) {
 			endGame();
 		}
 		else {
 			//randomly select a question and remove that question from the pool of possible questions
+			$("#timer").removeClass("lowTime");
 			time = 30;
 			var random = Math.floor(Math.random() * questionList.length);
 			currQuestion = questions[questionList[random]]; 
@@ -295,6 +308,7 @@ $(document).ready(function() {
 			console.log("started new game");
 			gameOver = false;
 			gameOn = true;
+			$("#timer").text("30");
 			startButton.css("display", "none");
 			newQuestion();
 		}
@@ -304,7 +318,9 @@ $(document).ready(function() {
 	$(".choice").on("click", function() {
 		var picked = $(this).attr("data-text");
 		console.log(picked);
+
 		if (gameOn === true) {
+			
 			if (picked === currQuestion.solution) {
 				gameOn = false;
 				correct++;
@@ -314,9 +330,11 @@ $(document).ready(function() {
 				var song = document.getElementById(currQuestion.tag);
 				song.pause();
 				song.currentTime = 0;
+				document.getElementById("ding").play();
+				document.getElementById("laugh").play();
 				//Display massage and begin the display interval timer
 				$("#messageBoard").text("Correct!");
-				solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+				solutionTimer = setInterval(function() {clearAnswer()}, 3000);
 			}
 			else if (picked !== currQuestion.solution) {
 				gameOn = false;
@@ -327,9 +345,11 @@ $(document).ready(function() {
 				var song = document.getElementById(currQuestion.tag);
 				song.pause();
 				song.currentTime = 0;
+				document.getElementById("buzzer").play();
+				document.getElementById("aww").play();
 				//Display massage and begin the display interval timer
-				$("#messageBoard").html("Incorrect\nThe correct answer was " + currQuestion.solution);
-				solutionTimer = setInterval(function() {clearAnswer()}, 2000);
+				$("#messageBoard").html("Incorrect" + "<br />" + "The correct answer was " + currQuestion.solution);
+				solutionTimer = setInterval(function() {clearAnswer()}, 3000);
 			}
 			else {
 				alert("ERROR");

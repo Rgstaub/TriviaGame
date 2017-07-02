@@ -4,28 +4,31 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Fascinate|Lilita+One|Luckiest+Guy|Permanent+Marker" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>Trivia Game</title>
 </head>
 <body>
-<audio src="" type="audio/mpeg">Your browser is not compatible with this site's audio. Chrome is recommended</audio>
-
-<div class="container">
-	<div class="row">
-		<div id="title"></div>
-		<div id="messageBoard"></div>
-		<div id="timer"></div>
-		<div id="choices"></div>
-			<button id="opt1" class="choice"></button>
-			<button id="opt2" class="choice"></button>
-			<button id="opt3" class="choice"></button>
-			<button id="opt4" class="choice"></button>
-		<div id="interface"></div>
+	<div class="container">
+		<div class="row">
+			<div id="title"></div>
+			<div id="timer"></div>
+			<div id="choices"></div>
+				<button id="opt1" class="choice"></button>
+				<button id="opt2" class="choice"></button>
+				<button id="opt3" class="choice"></button>
+				<button id="opt4" class="choice"></button>
+			<div id="messageBoard"> </div>
+			<div id="interface"></div>
+		</div>
 	</div>
-</div>
-
-
+	<div class="footer">&copy; Richard Staub 2017</div>
+	<audio id="laugh" src="audio/laugh.mp3" type="audio/mpeg">Your browser is not compatible with this site's audio. Chrome is recommended</audio>
+	<audio id="aww" src="audio/aww.mp3" type="audio/mpeg"></audio>
+	<audio id="tick" src="audio/tick.mp3" type="audio/mpeg"></audio>
+	<audio id="ding" src="audio/ding.mp3" type="audio/mpeg"></audio>
+	<audio id="buzzer" src="audio/buzzer.mp3" type="audio/mpeg"></audio>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/script.js"></script>
