@@ -20,8 +20,9 @@ var incorrect = 0;
 var gameTimer;
 var solutionTimer;
 var time = 30;
-
 var currQuestion = {};
+// This variable will be used to remove the already-answered questions from the pool of possible questions
+// and end the game when no more questions remain
 var questionList = ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", 
 					"q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19"];
 var questions = {
@@ -219,7 +220,9 @@ for (var i = 0; i < questionList.length; i++) {
 
 $(document).ready(function() {
 
-	//make the start button
+	// play the menu music
+	document.getElementById("menu").play();
+	// make the start button
 	var startButton = $("<button/>").attr("id", "startButton").addClass("uiButton");
 	startButton.text("START");
 	$("#interface").append(startButton);
@@ -227,7 +230,6 @@ $(document).ready(function() {
 	// increment the time down while the game is in progress. check each time if the timer has reached
 	// zero and process as an incorrect anser if so
 	function countDown() {
-		
 		time--;
 		$("#timer").text(time);
 		if (time === 0) {
@@ -235,6 +237,7 @@ $(document).ready(function() {
 			clearInterval(gameTimer);
 			solutionTimer = setInterval(function() {clearAnswer()}, 4000);
 			incorrect++;
+			// pause and reset the current song
 			var song = document.getElementById(currQuestion.tag);
 			song.pause();
 			song.currentTime = 0;
@@ -247,9 +250,9 @@ $(document).ready(function() {
 				document.getElementById("tick").play();
 			}
 		}
-
 	}
 
+	// the interval function to display the answer and begin the new question
 	function clearAnswer() {
 		gameOn = false;
 		$("#timer").text("30")
@@ -260,33 +263,38 @@ $(document).ready(function() {
 
 	//display results and reset game variables
 	function endGame() {
-		alert("Game Over\nCorrect: " + correct + "\nIncorrect: " + incorrect);
+		$("#messageBoard").html("Game Over<br>Correct: " + correct + "<br>Incorrect: " + incorrect);
 		startButton.css("display", "block");
 		gameOver = true;
 		gameOn = false;
 		correct = 0;
 		incorrect = 0;
-		questionList = ["q0", "q1", "q2", "q3"];
+		questionList = ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", 
+					"q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19"];;
 		$(".choice").each(function() {
 			$(this).text("");
 			$(this).css("display", "none");
 		})
 		$("#timer").text("");
+		document.getElementById("menu").play();
 	}	
 
 	//Set the current question. Start the music and display the options
 	function newQuestion() {
 		console.log(questionList.length);
 		gameOn = true;
+		// End the game once all questions have been removed from the pool
 		if (questionList.length < 1) {
 			endGame();
 		}
 		else {
-			//randomly select a question and remove that question from the pool of possible questions
+			
 			$("#timer").removeClass("lowTime");
 			time = 30;
+			//randomly select a question and remove that question from the pool of possible questions
 			var random = Math.floor(Math.random() * questionList.length);
 			currQuestion = questions[questionList[random]]; 
+			questionList.splice(random, 1);
 			//start playing the music
 			document.getElementById(currQuestion.tag).play();
 			//make a button for each option
@@ -297,7 +305,7 @@ $(document).ready(function() {
 				choice.text(opt);
 				choice.css("display", "block");
 			}
-			questionList.splice(random, 1);
+			// begin the countdown timer function
 			gameTimer = setInterval(function() {countDown()}, 1000);
 		}
 	}		
@@ -305,10 +313,18 @@ $(document).ready(function() {
 	//begin the game if the game is over
 	startButton.on("click", function() {
 		if (gameOver === true) {
+			//pause and reset the menu music
+			var menuSong = document.getElementById("menu");
+			console.log(menuSong);
+			menuSong.pause();
+			menuSong.currentTime = 0;
+			//begin the new game
 			console.log("started new game");
 			gameOver = false;
 			gameOn = true;
-			$("#timer").text("30");
+			$("#timer").html("30");
+			$("#instructions").html("");
+			$("#messageBoard").html("")
 			startButton.css("display", "none");
 			newQuestion();
 		}
@@ -318,9 +334,9 @@ $(document).ready(function() {
 	$(".choice").on("click", function() {
 		var picked = $(this).attr("data-text");
 		console.log(picked);
-
+		//only accept clicks while the timer is running
 		if (gameOn === true) {
-			
+			// when the correct anser is chosen
 			if (picked === currQuestion.solution) {
 				gameOn = false;
 				correct++;
@@ -336,6 +352,7 @@ $(document).ready(function() {
 				$("#messageBoard").text("Correct!");
 				solutionTimer = setInterval(function() {clearAnswer()}, 3000);
 			}
+			// for incorrect answers
 			else if (picked !== currQuestion.solution) {
 				gameOn = false;
 				incorrect++;

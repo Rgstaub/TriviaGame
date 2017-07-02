@@ -12,6 +12,7 @@ font-family: 'Permanent Marker', cursive;
 #7CF4D3		teal
 
 */
+
 html {
 	height: 100%;
 }
@@ -22,6 +23,12 @@ body {
 	height: 100%;
 }
 
+h1 {
+	font-size: .5em;
+	padding-top: 45px;
+}
+
+
 .footer {
 	position: fixed;
 	bottom: 0px;
@@ -31,11 +38,6 @@ body {
 	color: #89AEE1;
 	text-shadow: 1px 1px 1px #444;
 }
-
-
-/*.container {
-	height: 100%;
-}*/
 
 .choice {
 	display: none;
@@ -58,7 +60,14 @@ body {
 	box-shadow:  0px 0px 20px #E9F259;
 }
 
-
+#instructions {
+	font-family: 'Permanent Marker', cursive;
+	color: #E9F259;
+	font-size: 4em;
+	text-shadow: 2px 2px 2px #444;
+	text-align: center;
+	margin-top: 30px;
+}
 
 #messageBoard {
 	font-family: 'Permanent Marker', cursive;
@@ -73,6 +82,7 @@ body {
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
+	margin-top: 20px;
 	font-family: 'Luckiest Guy', cursive;
 	font-size: 5em;
 	background-color: #7CF4D3;
@@ -99,12 +109,32 @@ body {
 	color: #D46CE7;
 }
 
+
 @media only screen and (max-width: 550px) {
+	h1 {
+		font-size: .3em
+	}
+
 	.choice {
 		width: 90%;
 	}
 
 	#messageBoard {
 		font-size: 2em;
+	}
+
+	#instructions {
+		font-size: 2em;
+	}
+}
+
+@media only screen and (max-width: 360px) {
+	#timer {
+		font-size: 8em;
+		height:160px;
+	}
+
+	.choice {
+		font-size: 1.7em;
 	}
 }
